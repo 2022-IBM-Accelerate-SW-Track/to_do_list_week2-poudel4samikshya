@@ -20,34 +20,35 @@ class Home extends Component {
     // This solution works for a small application but a more complex hashing function should be used when
     // dealing with a larger data sensitive project.
 
-// added by me
+    //if it does not have a duplicate go along with the addition
+    //did not want to use the break or empty return function
+   
 
-const exists = this.state.todos.find(t => t.content === todo.content)
-    if(exists) {
-      return;
+
+    if ((this.state.todos.find(item => item.content === todo.content))) {
+          return;
     }
+    else{
 
-    todo.id = Math.random();
-    // Create a array that contains the current array and the new todo item
-    let new_list = [...this.state.todos, todo];
-    // Update the local state with the new array.
-    this.setState({
-      todos: new_list,
+      todo.id = Math.random();
+      // Create a array that contains the current array and the new todo item
+      let new_list = [...this.state.todos, todo];
+      // Update the local state with the new array.
+      this.setState({
+        todos: new_list,
+      });
+    }
+  };
+
+
+  deleteTodo = (id) => {
+    const todos = this.state.todos.filter((todo) => {
+      return todo.id !== id;
     });
-
-
-
-  }
-// added deletetodo list function
-
-deleteTodo = (id) => {
-  const todos = this.state.todos.filter((todo) => {
-    return todo.id !== id;
-  });
-  this.setState({
-    todos: todos,
-  });
-};
+    this.setState({
+      todos: todos,
+    });
+  };
 
   render() {
     return (
@@ -58,10 +59,11 @@ deleteTodo = (id) => {
         <AddTodo addTodo={this.addTodo} />
         {/* When returning the Todos component, todos is a prop passed to the todos.js file
          to format and render the current todo list state */}
-        <Todos todos={this.state.todos} deleteTodo={this.deleteTodo}/>
+        <Todos todos={this.state.todos} deleteTodo={this.deleteTodo} />
       </div>
     );
   }
 }
 
 export default Home;
+
